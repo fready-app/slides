@@ -1,0 +1,9 @@
+#navigation {
+  opacity: 1;
+  -webkit-animation: none;
+          animation: none;
+}
+
+#navigation a {
+  color: #333;
+}
