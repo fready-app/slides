@@ -1,0 +1,23 @@
+name: "[MASTER] SSH + git pull"
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: deploy over ssh
+      uses: appleboy/ssh-action@master
+      with:
+        debug: true
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script_stop: true
+        script: |
+          cd /var/www/slides.fready.app/www && git pull origin master
