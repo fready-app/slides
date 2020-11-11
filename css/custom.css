@@ -1,9 +1,23 @@
+p a {
+    text-decoration: underline;
+}
+
+header[role="banner"] {
+    padding: 1rem;
+    opacity: 0.4;
+}
+
 #navigation {
-  opacity: 1;
-  -webkit-animation: none;
-          animation: none;
+    opacity: 0.6;
+    animation: none;
+    -webkit-animation: none;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 #navigation a {
-  color: #333;
+    color: #333;
+}
+
+.mt {
+    margin-top: 3.2rem;
 }
