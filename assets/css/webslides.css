@@ -1,0 +1,1389 @@
+/*!
+ * Name: WebSlides
+ * Version: 1.5.0
+ * Date: 2018-01-01
+ * Description: Making HTML presentations easy
+ * URL: https://github.com/webslides/webslides#readme
+ * Credits: @jlantunez, @LuisSacristan, @Belelros
+ */
+@charset "UTF-8";
+/*-----------------------------------------------------------------------------------
+    0. CSS Reset & Normalize
+    1. Base
+        1.1 Wrap/Container
+        1.2 Animations
+        1.3 Responsive Media (videos, iframe, screenshots...)
+        1.4 Basic Grid (2,3,4 columns)
+    2. Typography & Lists
+        2.1 Headings with background
+        2.2 Classes: .text-
+        2.3 San Francisco Font (Apple)
+    3. Header & Footer
+        3.1 Logo
+    4. Navigation
+        4.1 Navbars
+    5. SLIDES (vertically and horizontally centered)
+        5.1 Mini container & Alignment
+        5.2 Counter / Navigation Slides
+        5.3 Background Images/Video
+    6. Magic blocks = .flexblock (Flexible blocks with auto-fill and equal height).
+        6.1 .flexblock.features
+        6.2 .flexblock.clients
+        6.3 .flexblock.steps
+        6.4 .flexblock.metrics
+        6.5 .flexblock.specs
+        6.6 .flexblock.reasons
+        6.7 .flexblock.gallery
+        6.8 .flexblock.plans
+        6.9. flexblock.activity
+    7. Promos/Offers (pricing, tagline, CTA...)
+    8. Work / Resume / CV
+    9. Table of contents
+    10. Cards
+    11. Quotes
+    12. Avatars
+    13. Tables
+    14. Forms
+  15. Longform Elements
+    16. Safari Bug (flex-wrap)
+    17. Slidex index (aka zoom)
+  18. Print
+  19. Colors
+----------------------------------------------------------------------------------- */
+/*
+=========================================
+0. CSS Reset & Normalize
+=========================================
+*/
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+img,
+s,
+strong,
+var,
+b,
+u,
+i,
+article,
+figure,
+header,
+nav,
+section,
+time,
+video {
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline; }
+
+article,
+figure,
+header,
+main,
+nav,
+section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit; }
+
+
+video {
+  display: inline-block;
+  vertical-align: baseline; }
+
+[hidden] {
+  display: none; }
+
+b,
+strong {
+  font-weight: 600; }
+
+a {
+  background-color: transparent; }
+
+a:active,
+a:hover {
+  outline: 0; }
+
+
+i {
+  font-style: italic; }
+
+::selection {
+  text-shadow: none; }
+
+img {
+  border: 0;
+  height: auto;
+  max-width: 100%; }
+
+img:hover {
+  opacity: .9; }
+
+svg:not(:root) {
+  overflow: hidden; }
+
+figure {
+  line-height: 0;
+  margin: 0;
+  position: relative; }
+
+/*=== Clearing === */
+header:before, header:after,
+main:before,
+main:after,
+section:before,
+section:after,
+.wrap:before,
+.wrap:after {
+  content: '';
+  display: table; }
+
+header:after,
+main:after,
+section:after,
+.wrap:after {
+  clear: both; }
+
+/*=========================================
+1. Base --> Baseline: 8px = .8rem
+=========================================== */
+/* -- Disable elastic scrolling/bounce:
+webslides.js will add .ws-ready automatically. Don't worry :) -- */
+.ws-ready,
+.ws-ready body {
+  height: 100%;
+  overflow: hidden;
+  width: 100%; }
+
+.ws-ready.ws-ready-zoom {
+  overflow: visible; }
+  .ws-ready.ws-ready-zoom body {
+    overflow: auto; }
+
+#webslides {
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll; }
+  #webslides::-webkit-scrollbar {
+    display: none; }
+
+a,
+a:active,
+a:focus,
+a:visited {
+  text-decoration: none;
+  -webkit-transition: all .3s ease-out;
+  transition: all .3s ease-out; }
+
+p a:active {
+  position: relative;
+  top: 2px; }
+
+
+.hidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px; }
+
+.shadow {
+  position: relative; }
+  .shadow:before, .shadow:after {
+    bottom: 1.6rem;
+    content: '';
+    max-width: 300px;
+    position: absolute;
+    top: 80%;
+    width: 50%;
+    z-index: -1; }
+  .shadow:after {
+    right: 2.4rem;
+    -webkit-transform: rotate(3deg);
+            transform: rotate(3deg); }
+  .shadow:before {
+    left: 2.4rem;
+    -webkit-transform: rotate(-3deg);
+            transform: rotate(-3deg); }
+
+/*=== 1.1 WRAP/CONTAINER === */
+.wrap,
+header nav {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 2; }
+  @media (min-width: 1024px) {
+    .wrap,
+    header nav {
+      width: 90%; } }
+
+
+.shadow {
+  padding: 2.4rem; }
+
+.aligncenter {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; }
+
+img.aligncenter,
+figure.aligncenter {
+  display: block;
+  margin-bottom: .8rem;
+  margin-top: .8rem; }
+
+
+img.aligncenter,
+figure.aligncenter {
+  margin-bottom: 3.2rem;
+  margin-top: 3.2rem; }
+
+/*=== div.size-60, img.size-50, h1.size-40, p.size-30... === */
+@media (min-width: 1024px) {
+  .size-50 {
+    width: 50%; } }
+
+/* === 1.2 Animations ================
+Just 5 basic animations:
+.fadeIn, .fadeInUp, .zoomIn, .slideInLeft, and .slideInRight
+https://github.com/daneden/animate.css */
+/*-- fadeIn -- */
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+/*-- fadeInUp -- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none; } }
+
+/*-- zoomIn -- */
+@keyframes zoomIn {
+  from {
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+            transform: scale3d(0.3, 0.3, 0.3); }
+  50% {
+    opacity: 1; } }
+
+.zoomIn {
+  -webkit-animation: zoomIn 1s;
+          animation: zoomIn 1s; }
+
+/*-- slideInLeft -- */
+@keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+    visibility: visible; }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0); } }
+
+.slideInLeft {
+  -webkit-animation: slideInLeft 1s;
+          animation: slideInLeft 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both; }
+
+/*-- slideInRight -- */
+@keyframes slideInRight {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+    visibility: visible; }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0); } }
+
+.slideInRight {
+  -webkit-animation: slideInRight 1s;
+          animation: slideInRight 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both; }
+
+/* Animated Background (Matrix) */
+@keyframes anim {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
+  100% {
+    -webkit-transform: translateY(-1200px);
+            transform: translateY(-1200px); } }
+
+/* Duration */
+
+/*=== 1.3 Responsive Media (videos, iframe...) === */
+
+/*=== HTML Browser (Screenshots) ================ */
+/* <figure class="browser"> img </figure> */
+
+/*=== 1.4. Basic Grid (Flexible blocks)
+Auto-fill & Equal height === */
+.grid {
+  clear: both;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto; }
+  .grid:after {
+    clear: both; }
+  .grid:before {
+    content: '';
+    display: table; }
+  .grid > .column {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+        -ms-flex: auto;
+            flex: auto;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 2.4rem;
+    position: relative;
+    -webkit-transition: .3s;
+    transition: .3s;
+    width: 100%; }
+  .grid.vertical-align .column {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  @media (min-width: 768px) {
+    .grid > .column {
+      width: 25%; }
+    .grid.sm .column:nth-child(1) {
+      width: 30%; }
+    .grid.sm .column:nth-child(2) {
+      width: 70%; }
+    .grid.ms .column:nth-child(1) {
+      width: 70%; }
+    .grid.ms .column:nth-child(2) {
+      width: 30%; } }
+
+/*============================
+2. TYPOGRAPHY & LISTS
+============================== */
+html,
+body {
+  font-weight: 300;
+  line-height: 1;
+  text-rendering: optimizeLegibility; }
+
+html,
+body {
+  font-family: 'Roboto', 'San Francisco', helvetica, arial, sans-serif;
+  font-size: 62.5%; }
+
+body {
+  font-size: 1.8rem; }
+
+p,
+time {
+  line-height: 3.2rem;
+  margin-bottom: 3.2rem; }
+
+
+p:last-child {
+  margin-bottom: 0; }
+
+/*== List .description (Product/Specs) === */
+
+h1 svg,
+h2 svg,
+h3 svg,
+h4 svg {
+  margin-top: -.8rem; }
+
+.text-intro svg,
+.try svg {
+  margin-top: -.4rem; }
+
+h1 {
+  font-size: 4rem;
+  line-height: 5.6rem; }
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 5.6rem;
+      line-height: 7.2rem; } }
+
+h1 span {
+  font-style: italic; }
+
+h2 {
+  font-size: 3.2rem;
+  line-height: 4.8rem; }
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 4.8rem;
+      line-height: 6.4rem; } }
+
+h3 {
+  font-size: 2.4rem;
+  line-height: 4rem; }
+  @media (min-width: 768px) {
+    h3 {
+      font-size: 4rem;
+      line-height: 5.6rem; } }
+
+h4 {
+  font-size: 2.2rem;
+  line-height: 4rem; }
+  @media (min-width: 768px) {
+    h4 {
+      font-size: 3.2rem;
+      line-height: 4.8rem; } }
+
+h1 + h1 {
+  margin-top: .8rem; }
+
+h1 + h2 {
+  margin-top: .8rem; }
+
+h1 + h3 {
+  margin-top: .8rem; }
+
+h1 + h4 {
+  margin-top: .8rem; }
+
+h2 + h1 {
+  margin-top: .8rem; }
+
+h2 + h2 {
+  margin-top: .8rem; }
+
+h2 + h3 {
+  margin-top: .8rem; }
+
+h2 + h4 {
+  margin-top: .8rem; }
+
+h3 + h1 {
+  margin-top: .8rem; }
+
+h3 + h2 {
+  margin-top: .8rem; }
+
+h3 + h3 {
+  margin-top: .8rem; }
+
+h3 + h4 {
+  margin-top: .8rem; }
+
+h4 + h1 {
+  margin-top: .8rem; }
+
+h4 + h2 {
+  margin-top: .8rem; }
+
+h4 + h3 {
+  margin-top: .8rem; }
+
+h4 + h4 {
+  margin-top: .8rem; }
+
+h1 + img,
+h2 + img,
+h3 + img {
+  margin-bottom: 4.8rem;
+  margin-top: 4.8rem; }
+
+/*== 2.1. Headings with background ==*/
+h1[class*='bg-'] {
+  padding: 2.4rem; }
+
+h2[class*='bg-'] {
+  padding: 2.4rem; }
+
+h3[class*='bg-'] {
+  padding: 2.4rem; }
+
+h4[class*='bg-'] {
+  padding: 2.4rem; }
+
+
+p[class*='bg-'] {
+  padding: 2.4rem; }
+
+h1 [class*='bg-'],
+h2 [class*='bg-'],
+h3 [class*='bg-'] {
+  padding: .4rem .8rem; }
+
+/*== 2.2. Typography Classes = .text- == */
+.text-intro {
+  font-size: 2.4rem;
+  line-height: 4rem; }
+
+/* -- Serif -- */
+
+h1 span {
+  font-family: 'Maitree', times, serif; }
+
+/* -- h1,h2... Promo/Landings -- */
+
+/* -- Subtitle (Before h1, h2) p.subtitle + h1/h2 */
+.text-subtitle {
+  letter-spacing: .2rem;
+  margin-bottom: 0;
+  text-transform: uppercase; }
+  .text-subtitle p.text-subtitle {
+    font-size: 1.6rem; }
+    .text-subtitle p.text-subtitle svg {
+      vertical-align: text-top; }
+  .text-subtitle + p {
+    margin-top: 3.2rem; }
+
+/* -- Emoji (you'll love this) -- */
+
+/* -- Numbers (results, sales... 23,478,289 iphones) -- */
+
+/* -- Magazine Two Columns -- */
+
+/* -- Heading with border -- */
+
+/* -- Separator/Symbols (stars ***...) -- */
+
+/* -- Pull Quote (Right/Left)  -- */
+
+/* -- Interviews (Questions & Answers)  --- */
+/* -- <dl class="text-interview">
+<dt>name</dt>
+<dd><p>question or answer</p>
+</dd>
+--- */
+
+/* -- Info Messages (error, warning, success... -- */
+
+/*=========================================
+2.1. San Francisco Font (Apple's new font)
+=========================================== */
+
+/* Ultra Light */
+@font-face {
+  font-family: 'San Francisco';
+  font-weight: 100;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-ultralight-webfont.woff2"); }
+
+/* Thin */
+@font-face {
+  font-family: 'San Francisco';
+  font-weight: 200;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-thin-webfont.woff2"); }
+
+/* Regular */
+@font-face {
+  font-family: 'San Francisco';
+  font-weight: 400;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff2"); }
+
+/* Bold */
+@font-face {
+  font-family: 'San Francisco';
+  font-weight: bold;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff2"); }
+
+/*=========================================
+3. Header & Footer
+=========================================== */
+/* -- If you want an unique, global header/footer,read this:
+https://github.com/webslides/webslides/issues/57 -- */
+header,
+#navigation {
+  padding: 2.4rem;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  width: 100%; }
+
+header p {
+  line-height: 4.8rem;
+  margin-bottom: 0; }
+
+header[role='banner'] img {
+  height: 4rem;
+  vertical-align: middle; }
+
+header {
+  z-index: 3; }
+
+header {
+  left: 0;
+  position: absolute;
+  top: 0; }
+
+header[role='banner'] {
+  opacity: 0; }
+  header[role='banner']:hover {
+    opacity: 1; }
+
+/*=== 3.1. Logo === */
+.logo {
+  text-transform: lowercase; }
+  .logo a {
+    background: url("../images/logos/logo.svg") no-repeat 0 0;
+    background-size: 4.8rem;
+    float: left;
+    height: 4.8rem;
+    text-indent: -4000px;
+    /*If you remove text-indent and add: */
+    /*padding-left: 6rem;*/
+    vertical-align: middle;
+    width: 4.8rem; }
+
+/*=========================================
+4. Navigation
+=========================================== */
+/*=== 4.1. Navbars === */
+
+/*============================================
+5. SLIDES (Full Screen)
+Vertically and horizontally centered
+============================================== */
+/* Fade transition to all slides.
+* = All HTML elements will have those styles.*/
+section * {
+  -webkit-animation: fadeIn .6s ease-in-out;
+          animation: fadeIn .6s ease-in-out; }
+
+section .background {
+  -webkit-animation-duration: 0s;
+          animation-duration: 0s; }
+
+/*=== Section = Slide === */
+section,
+.slide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100vh;
+  /*Fullscreen*/
+  /* Prototyping? min-height: 720px (Baseline: 8px = .8rem)*/
+  padding: 2.4rem;
+  /*Fixed/Visible header? padding-top: 12rem; */
+  page-break-after: always;
+  position: relative;
+  word-wrap: break-word; }
+  @media (min-width: 1024px) {
+    section,
+    .slide {
+      padding-bottom: 12rem;
+      padding-top: 12rem; } }
+
+/*slide with no padding (full card, .embed youtube video...) */
+.fullscreen {
+  padding: 0;
+  /* Fixed/Visible header?
+  padding:8.2rem 0 0 0;
+  */ }
+
+/* slide alignment - top */
+
+/* slide alignment - bottom */
+
+/*== 5.1. Mini container width:50%
+Aligned items [class*="content-"]=== */
+
+.wrap[class*='bg-'],
+[class*='align'][class*='bg-'] {
+  padding: 4.8rem; }
+
+/*=== 5.3 Slides - Background Images/Videos === */
+.background {
+  background-repeat: no-repeat;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+/*=== BG Positions === */
+.background {
+  background-position: center;
+  background-size: cover;
+  /*fullscreen video
+    <video class="background-video">
+  */ }
+
+/*=== bg image/video overlay === */
+/*-- [class*="bg-"] .background.dark, [class*="bg-"] .embed.dark...  -- */
+
+/*=== Animated Background Image === */
+
+/*=== Background with a frame === */
+/*<span class="background" style="background-image:url('image.jpg')"></span>
+<span class="background frame"></span>*/
+
+/* === 5.2 Counter / Navigation Slides  === */
+#navigation {
+  -webkit-animation: fadeIn 8s;
+          animation: fadeIn 8s;
+  bottom: 0;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  position: fixed;
+  right: 0;
+  width: 24.4rem;
+  /* hover/visibility */
+  z-index: 4; }
+  #navigation:hover {
+    opacity: 1; }
+  #navigation p {
+    margin-bottom: 0; }
+
+#counter {
+  display: block;
+  line-height: 4.8rem;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  text-align: center;
+  width: 10rem; }
+  #counter a:hover {
+    padding: .8rem; }
+
+a#next,
+a#previous {
+  border-radius: .4rem;
+  cursor: pointer;
+  font-size: 2.4rem;
+  height: 4rem;
+  padding: .8rem;
+  position: absolute;
+  text-align: center;
+  width: 4rem; }
+
+a#next {
+  right: 3.2rem; }
+
+a#previous {
+  left: 3.2rem; }
+
+@media (max-width: 1024px) {
+  #navigation {
+    -webkit-animation: fadeIn 6s;
+            animation: fadeIn 6s;
+    background: url("../images/swipe.svg") no-repeat center top;
+    background-size: 4.8rem; }
+  #navigation a,
+  #counter {
+    display: none; } }
+
+/*===============================================================
+6. Magic blocks with flexbox (Auto-fill & Equal Height)
+Blocks Links li>a = .flexblock.blink (.blink required)
+================================================================= */
+
+/*====================================================================
+6.1 Features <ul class="flexblock features">
+====================================================================== */
+
+/*=====================================================================
+6.2 Clients Logos <ul class="flexblock clients">
+======================================================================= */
+
+/*==================================================
+6.3 flexblock.steps <ul class="flexblock steps">
+About, Philosophy...
+=================================================== */
+
+/*=================================================
+6.4 Block Numbers - <ul class="flexblock metrics">
+=================================================== */
+
+/*=====================================================
+6.5 Specs/Items: <ul class="flexblock specs">
+======================================================= */
+
+/*=================================================
+6.6 Reasons/Why/Numbers (counter-increment)
+<ul class="flexblock reasons">
+=================================================== */
+
+/*=================================================
+6.7 Gallery - <ul class="flexblock gallery">
+Block Thumbnails li+.overlay+image
+img size recommended:800x600px
+=================================================== */
+
+/*===============================================
+6.8 Plans / Pricing <ul class="flexblock plans">
+================================================= */
+
+/*===========================================
+6.9 Block Activity <ul class="activity">
+CV / News
+============================================= */
+
+/*=============================================
+7. Promos/Offers (pricing, tagline, CTA...)
+=============================================== */
+
+.number {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  max-width: 100%;
+  padding: .8rem; }
+
+.number {
+  text-align: center; }
+
+.number span {
+  display: block;
+  font-size: 8rem;
+  line-height: 8rem; }
+
+@media (min-width: 768px) {
+  .number {
+    max-width: 50%;
+    padding: 4.8rem; }
+  .number span {
+    font-size: 16rem;
+    line-height: 16rem; } }
+
+/* --- Header CTA --- */
+
+/*=========================================
+8. Work/Resumé/CV <ul class="work">
+=========================================== */
+
+/*===========================================
+9. Table of contents
+============================================= */
+
+/*===========================================
+10. Cards
+============================================= */
+
+@media (min-width: 768px) {
+  [class*='card'][class*='bg-'] figure,
+  .fullscreen [class*='card'] figure {
+    max-height: 100%;
+    min-width: 380px;
+    text-align: center;
+    vertical-align: middle; } }
+
+@media (min-width: 768px) {
+  [class*='card']:nth-child(odd) figure {
+    -webkit-box-ordinal-group: 1;
+        -ms-flex-order: 0;
+            order: 0; }
+  [class*='card']:nth-child(even) figure {
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1; } }
+
+@media (max-width: 767px) {
+  .card figure,
+  .card header {
+    width: 100%; } }
+
+/*=========================================
+11. Quotes
+=========================================== */
+
+/* -- Interviews dl.text-interview -- */
+
+/* -- A big Blockquote -- */
+/* .wall will be deprecated soon. Use .text-quote ;) */
+
+/*=========================================
+12. Avatars - uifaces.com
+=========================================== */
+
+/*=========================================
+13. Tables
+=========================================== */
+
+/*=========================================
+14. Forms
+=========================================== */
+
+.try {
+  display: block;
+  font-size: 1.6rem;
+  margin-top: 1.6rem; }
+
+/* Buttons/Badges */
+
+/*=== App Store Badges === */
+/* Change width and height: 216x64px, 162x48px, 135x40... */
+
+/*=========================================
+15. Longform
+=========================================== */
+/* -- Posts = .wrap.longform -- */
+
+/*=========================================
+16. SAFARI BUGS (flex-wrap)
+Solution: stackoverflow.com/questions/34250282/flexbox-safari-bug-flex-wrap
+=========================================== */
+
+.grid:before,
+.grid:after {
+  width: 0; }
+
+/*==============================================
+18. Slides Index: Thumbnails navigation gallery
+================================================ */
+#webslides-zoomed {
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2; }
+  #webslides-zoomed.disabled {
+    left: -100000px;
+    position: absolute; }
+  #webslides-zoomed .slide {
+    height: 400%;
+    width: 400%; }
+    @media screen and (orientation: portrait), screen and (max-width: 768px) and (orientation: landscape) {
+      #webslides-zoomed .slide {
+        height: 200%;
+        width: 200%; } }
+    @media (max-aspect-ratio: 2 / 3) {
+      #webslides-zoomed .slide {
+        height: 200%;
+        width: 200%; } }
+  @media (min-width: 1024px) {
+    #webslides-zoomed > .wrap {
+      padding-bottom: 12rem;
+      padding-top: 12rem; } }
+  #webslides-zoomed > .wrap > .grid > .column {
+    -ms-flex-item-align: auto;
+        align-self: auto;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+    -webkit-box-ordinal-group: 1;
+        -ms-flex-order: 0;
+            order: 0;
+    position: relative;
+    width: 25%; }
+    @media screen and (max-width: 567px) {
+      #webslides-zoomed > .wrap > .grid > .column {
+        width: 100%; } }
+    @media screen and (min-width: 568px) and (max-width: 1024px) {
+      #webslides-zoomed > .wrap > .grid > .column {
+        width: 50%; } }
+    @media screen and (max-width: 567px) and (orientation: portrait) {
+      #webslides-zoomed > .wrap > .grid > .column {
+        width: 100%; } }
+    #webslides-zoomed > .wrap > .grid > .column > .wrap-zoom {
+      border-radius: .3rem;
+      display: inline-block;
+      height: 25vh;
+      overflow: hidden;
+      position: relative;
+      -webkit-transition: .3s;
+      transition: .3s; }
+      @media screen and (max-width: 567px) {
+        #webslides-zoomed > .wrap > .grid > .column > .wrap-zoom {
+          height: 50vh; } }
+      @media screen and (min-width: 568px) and (max-width: 1023px) {
+        #webslides-zoomed > .wrap > .grid > .column > .wrap-zoom {
+          height: 33vh; } }
+      @media screen and (orientation: portrait) {
+        #webslides-zoomed > .wrap > .grid > .column > .wrap-zoom {
+          height: 50vw; } }
+      #webslides-zoomed > .wrap > .grid > .column > .wrap-zoom:hover {
+        -webkit-transform: scale(1.02);
+                transform: scale(1.02);
+        z-index: 2; }
+      #webslides-zoomed > .wrap > .grid > .column > .wrap-zoom.current {
+        -webkit-transform: scale(1.08);
+                transform: scale(1.08); }
+    #webslides-zoomed > .wrap > .grid > .column > .wrap-zoom > .zoom-layer {
+      background: transparent;
+      cursor: pointer;
+      height: 100%;
+      position: absolute;
+      width: 100%; }
+  #webslides-zoomed .column > .wrap-zoom > .slide {
+    clip: rect(0 auto auto 0);
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    left: 0;
+    position: absolute;
+    top: 0;
+    -webkit-transform: scale(0.25) translate(-150%, -150vh);
+            transform: scale(0.25) translate(-150%, -150vh); }
+    @media screen and (orientation: portrait), screen and (max-width: 768px) and (orientation: landscape) {
+      #webslides-zoomed .column > .wrap-zoom > .slide {
+        -webkit-transform: scale(0.5) translate(-50%, -50%);
+                transform: scale(0.5) translate(-50%, -50%); } }
+    @media (max-aspect-ratio: 2 / 3) {
+      #webslides-zoomed .column > .wrap-zoom > .slide {
+        -webkit-transform: scale(0.5) translate(-50%, -50%);
+                transform: scale(0.5) translate(-50%, -50%); } }
+  #webslides-zoomed .column {
+    opacity: 0;
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+    -webkit-transition: opacity .4s, -webkit-transform .4s;
+    transition: opacity .4s, -webkit-transform .4s;
+    transition: opacity .4s, transform .4s;
+    transition: opacity .4s, transform .4s, -webkit-transform .4s;
+    -webkit-transition-delay: .2s;
+            transition-delay: .2s; }
+  #webslides-zoomed.in .column {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); }
+
+.text-slide-number {
+  display: inline-block;
+  margin: .8rem auto;
+  text-align: center; }
+
+#webslides {
+  -webkit-transition: -webkit-filter .3s;
+  transition: -webkit-filter .3s;
+  transition: filter .3s;
+  transition: filter .3s, -webkit-filter .3s; }
+  #webslides.disabled {
+    position: fixed;
+    width: 100%;
+    z-index: 0; }
+  #webslides.disabled {
+    /*
+    filter: blur(10px);
+    transform: scale(1.1);
+    */
+    /* Blur makes scroll no accesible */
+    width: calc(100% - 10px); }
+
+/*=========================================
+17. PRINT
+=========================================== */
+@media print {
+  @page {
+    margin: .5cm;
+    size: A4 landscape; }
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    -webkit-filter: none !important;
+            filter: none !important;
+    text-shadow: none !important; }
+  html,
+  body,
+  #webslides {
+    height: auto !important;
+    overflow: auto !important;
+    width: auto !important; }
+  #webslides {
+    overflow-x: auto !important;
+    overflow-y: auto !important; }
+  section,
+  .slide {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    height: auto !important; }
+  section * {
+    -webkit-animation: none;
+            animation: none; }
+  
+  figure {
+    page-break-inside: avoid; }
+  #counter,
+  #navigation {
+    display: none; } }
+
+/*=========================================
+19. Colors
+=========================================== */
+/* -- Disable elastic scrolling/bounce:
+webslides.js will add .ws-ready automatically. Don't worry :) -- */
+body {
+  background-color: #f7f9fb;
+  color: #333; }
+
+svg {
+  fill: currentColor; }
+
+[class*='bg-'] a {
+  color: #bce; }
+
+a,
+.bg-white a {
+  color: #44d; }
+
+a:hover {
+  color: #3af; }
+
+
+article header a {
+  color: inherit; }
+
+::selection {
+  background-color: rgba(221, 238, 255, 0.8); }
+
+/*================================================
+Slides - Backgrounds <section class="bg-primary">
+================================================== */
+/*3 Corp Colors*/
+
+.bg-white {
+  background-color: #fff; }
+
+[class*='bg-'] .bg-white {
+  color: #333;
+  text-shadow: none; }
+
+/* BG Apple Keynote*/
+
+/*Font Color*/
+
+/*Transparent/Opacity*/
+
+/*Covers/Longforms...*/
+
+/*Horizontal Gradient*/
+
+/*Vertical Gradient*/
+
+/*Radial Gradient*/
+
+/*White Gradient (vertical)*/
+
+/*Gray Gradient (horizontal)*/
+
+/*Border/Frame*/
+
+/*Layer/Box Shadow*/
+.shadow {
+  position: relative; }
+
+.shadow:before,
+.shadow:after {
+  -webkit-box-shadow: 0 16px 24px rgba(0, 20, 80, 0.3);
+          box-shadow: 0 16px 24px rgba(0, 20, 80, 0.3); }
+
+/*============================
+TYPOGRAPHY
+============================== */
+/* -- Horizontal separator  -- */
+
+/* -- Pull Quote (Right/Left)  -- */
+
+/* -- Context  -- */
+
+/* -- Text shadow  -- */
+
+/* -- time, ampersands, prepositions (for, of...), symbols...
+[class*='card-'] time,
+h1 span {
+  color: #abd;
+}
+
+/* -- <pre> comment  -- */
+
+/*=========================================
+Header/Nav
+=========================================== */
+header[role='banner'] {
+  background-color: #fff; }
+
+.logo a {
+  color: inherit; }
+
+/*===================================================
+.flexblock li hover/active
+===================================================== */
+
+/*=========================================
+Features & Clients List
+=========================================== */
+
+/*============================
+.flexblock with border
+============================== */
+
+/*===========================================
+flexblock.steps
+============================================= */
+
+/*=========================================================
+Items: You can use for settings, drag&drop, close/delete...
+=========================================================== */
+
+/*=========================================================
+Why/Steps/Motivation/Reasons -  Decimal/Numbers
+=========================================================== */
+
+/*=========================================
+Overlays
+=========================================== */
+
+/*=========================================
+Gallery li+.overlay+image
+=========================================== */
+
+/*Arrow */
+
+/*=========================================
+Plans / Pricing
+=========================================== */
+
+/*============================
+Activity/CV/Timeline/News
+============================== */
+
+/*=========================================
+Resume/Work/CV/Portfolio
+=========================================== */
+
+/*===========================================
+Clients / Services / Logos...
+============================================= */
+
+/*====================
+LOGOS
+====================== */
+/* --- Images (black logo/image) --- */
+
+/* --- Images (gray logo/image) --- */
+
+/* --- Images (white Logo/Image) --- */
+
+/* --- Logo/Images Hover --- */
+
+/*=========================================================
+Cards
+=========================================================== */
+
+/* ---  card ul specs --- */
+
+/*== Figure Background === */
+
+/*== Ficaption Cards === */
+
+/*===CTA (Call to Action - Numbers, Price, Promo...)  ===== */
+
+/*=========================================
+Tables
+=========================================== */
+
+/*============================
+Browser (Screenshots)
+============================== */
+
+/*=== Topbar === */
+
+/*=========================================
+Forms
+=========================================== */
+
+/* Inputs/Buttons - hover */
+
+/* App Store Badges */
+
+/*============================
+Table of Contents
+============================== */
+
+/*============================
+Slides (Counter/Arrows)
+============================== */
+#counter,
+#navigation a {
+  color: #abc; }
+
+#webslides:hover #navigation a:hover {
+  background-color: rgba(0, 10, 40, 0.8);
+  color: #fff; }
+
+/*============================
+Footer
+============================== */
+
+/*============================
+Slides Index
+============================== */
+#webslides-zoomed {
+  background: rgba(0, 10, 40, 0.8); }
+
+#webslides-zoomed .column > .wrap-zoom {
+  background-color: #f7f9fb;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.04);
+  color: #333; }
+  #webslides-zoomed .column > .wrap-zoom:hover {
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.08); }
+  #webslides-zoomed .column > .wrap-zoom.current {
+    border: 0.6rem solid rgba(0, 20, 255, 0.2); }
+
+.text-slide-number {
+  color: #abc; }
